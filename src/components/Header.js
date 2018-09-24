@@ -23,7 +23,7 @@ class Header extends React.Component {
               <label className="label has-text-white">Your API token</label>
               <input
                 className="input"
-                type="text"
+                type="password"
                 placeholder="Token"
                 onChange={this.handleInputChange}
                 value={this.props.token}
