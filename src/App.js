@@ -10,11 +10,11 @@ class App extends React.Component {
     super();
     this.state = {
       searchText: "",
-      token: ""
+      token: "",
+      client: null
     };
 
     this.handleTextInput = this.handleTextInput.bind(this);
-    this.client = generateClient(this.state.token);
   }
 
   handleTextInput = event => {
@@ -22,8 +22,7 @@ class App extends React.Component {
   };
 
   handleTokenInput = token => {
-    this.client = generateClient(token);
-    this.setState({ token });
+    this.setState({ token, client: generateClient(token) });
   };
 
   render() {
@@ -49,8 +48,9 @@ class App extends React.Component {
         </div>
 
         {this.state.token !== "" &&
-          this.state.searchText !== "" && (
-            <ApolloProvider client={this.client}>
+          this.state.searchText !== "" &&
+          this.state.client !== null && (
+            <ApolloProvider client={this.state.client}>
               <Query
                 query={QUERY_USER_SEARCH}
                 variables={{ queryString: this.state.searchText }}

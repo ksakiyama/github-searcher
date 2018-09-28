@@ -1,6 +1,8 @@
 import ApolloClient from "apollo-boost";
 import gql from "graphql-tag";
 
+const TOKEN_LENGTH = 40;
+
 export const QUERY_USER_SEARCH = gql`
   query SearchUser($queryString: String!) {
     search(query: $queryString, type: USER, first: 30) {
@@ -24,6 +26,9 @@ export const QUERY_USER_SEARCH = gql`
 `;
 
 export function generateClient(token) {
+  if (token.length !== TOKEN_LENGTH) {
+    return null;
+  }
   const client = new ApolloClient({
     uri: "https://api.github.com/graphql",
     request: operation => {
