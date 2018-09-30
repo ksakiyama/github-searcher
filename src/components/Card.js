@@ -9,7 +9,7 @@ export default class Card extends React.Component {
     return (
       <div className="column">
         {/* TODO go to detail view */}
-        <a>
+        <a href="#top">
           <div className="card">
             <div className="card-content">
               <div className="media">
