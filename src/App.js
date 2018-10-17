@@ -2,7 +2,11 @@ import React from "react";
 import { ApolloProvider, Query } from "react-apollo";
 import Header from "./components/Header.js";
 import CardSection from "./components/CardSection.js";
-import { QUERY_USER_SEARCH, generateClient } from "./helpers/graphqlHelper.js";
+import {
+  QUERY_USER_SEARCH,
+  QUERY_REPOSITORY_SEARCH,
+  generateClient
+} from "./helpers/graphqlHelper.js";
 import "./App.css";
 
 class App extends React.Component {
@@ -11,10 +15,23 @@ class App extends React.Component {
     this.state = {
       searchText: "",
       token: "",
-      client: null
+      client: null,
+      query: QUERY_USER_SEARCH,
+      searchCategory: "user",
+      selectedOption: ""
+    };
+
+    this.QUERIES = {
+      user: QUERY_USER_SEARCH,
+      repository: QUERY_REPOSITORY_SEARCH
     };
 
     this.handleTextInput = this.handleTextInput.bind(this);
+    this.handleTokenInput = this.handleTokenInput.bind(this);
+    this.handleUserButtonClicked = this.handleUserButtonClicked.bind(this);
+    this.handleRepositoryButtonClicked = this.handleRepositoryButtonClicked.bind(
+      this
+    );
   }
 
   handleTextInput = event => {
@@ -25,6 +42,15 @@ class App extends React.Component {
     this.setState({ token, client: generateClient(token) });
   };
 
+  handleUserButtonClicked = event => {
+    this.setState({ searchCategory: "user" });
+  };
+
+  handleRepositoryButtonClicked = evebt => {
+    this.setState({ searchCategory: "repository" });
+  };
+
+  // TODO Responsive Design(button margin, left, right)
   render() {
     return (
       <div className="App">
@@ -33,16 +59,24 @@ class App extends React.Component {
         <div className="columns">
           <div className="column" />
           <div className="column is-two-fifths">
-            <label className="label">Search</label>
-            <p className="control">
-              <input
-                className="input"
-                type="text"
-                placeholder="User Name"
-                onChange={this.handleTextInput}
-                value={this.state.searchText}
-              />
-            </p>
+            {/* <label className="label">Search</label> */}
+            <div className="columns">
+              <div className="column">
+                <a class="button is-fullwidth is-dark">User</a>
+              </div>
+              <div className="column">
+                <a class="button is-fullwidth is-outlined">Repository</a>
+              </div>
+            </div>
+            {/* <p className="control"> */}
+            <input
+              className="input"
+              type="text"
+              placeholder="Input search text"
+              onChange={this.handleTextInput}
+              value={this.state.searchText}
+            />
+            {/* </p> */}
           </div>
           <div className="column" />
         </div>

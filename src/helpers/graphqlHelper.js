@@ -25,6 +25,33 @@ export const QUERY_USER_SEARCH = gql`
   }
 `;
 
+// TODO select columns
+export const QUERY_REPOSITORY_SEARCH = gql`
+  query SearchRepository($queryString: String!) {
+    search(query: $queryString, type: REPOSITORY, first: 30) {
+      repositoryCount,
+      nodes {
+        ... on Repository {
+  	      name,
+          url,
+          nameWithOwner,
+          owner {
+            id
+          },
+          homepageUrl,
+          resourcePath,
+          description,
+          forkCount,
+          isFork,
+          primaryLanguage {
+            id
+          }
+        }
+      }
+    }
+  }
+`;
+
 export function generateClient(token) {
   if (token.length !== TOKEN_LENGTH) {
     return null;

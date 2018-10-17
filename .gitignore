@@ -25,3 +25,5 @@ src/config.js
 .firebase/
 .firebaserc
 firebase.json
+
+key.txt
