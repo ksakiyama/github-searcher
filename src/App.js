@@ -9,13 +9,20 @@ import {
 } from "./helpers/graphqlHelper.js";
 import "./App.css";
 
+// DEBUG
+import { TOKEN } from "./config.js";
+
 class App extends React.Component {
   constructor() {
     super();
+
+    // DEBUG
+    const initialToken = TOKEN;
+
     this.state = {
       searchText: "",
-      token: "",
-      client: null,
+      token: initialToken,
+      client: generateClient(initialToken),
       query: QUERY_USER_SEARCH,
       searchCategory: "user",
       selectedOption: ""
@@ -46,7 +53,7 @@ class App extends React.Component {
     this.setState({ searchCategory: "user" });
   };
 
-  handleRepositoryButtonClicked = evebt => {
+  handleRepositoryButtonClicked = event => {
     this.setState({ searchCategory: "repository" });
   };
 
