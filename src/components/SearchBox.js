@@ -1,20 +1,20 @@
 import React from "react";
 
-class SearchBox extends React.Component {
+export default class SearchBox extends React.Component {
   constructor(props) {
-    
+    super();
+    this.handleTextInput = this.handleTextInput.bind(this);
   }
 
-  handleTextInput = () => {
-    this.props.handleTextInput()
-  }
+  handleTextInput = event => {
+    this.props.handleTextInput(event);
+  };
 
   render() {
     return (
       <div className="columns">
         <div className="column" />
         <div className="column is-two-fifths">
-          {/* <label className="label">Search</label> */}
           <div className="columns">
             <div className="column">
               <a class="button is-fullwidth is-dark">User</a>
@@ -23,7 +23,6 @@ class SearchBox extends React.Component {
               <a class="button is-fullwidth is-outlined">Repository</a>
             </div>
           </div>
-          {/* <p className="control"> */}
           <input
             className="input"
             type="text"
@@ -31,7 +30,6 @@ class SearchBox extends React.Component {
             onChange={this.handleTextInput}
             value={this.props.searchText}
           />
-          {/* </p> */}
         </div>
         <div className="column" />
       </div>

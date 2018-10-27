@@ -1,6 +1,7 @@
 import React from "react";
 import { ApolloProvider, Query } from "react-apollo";
 import Header from "./components/Header.js";
+import SearchBox from "./components/SearchBox.js";
 import CardSection from "./components/CardSection.js";
 import {
   QUERY_USER_SEARCH,
@@ -63,31 +64,10 @@ class App extends React.Component {
       <div className="App">
         <Header inputHandler={this.handleTokenInput} token={this.state.token} />
         <br />
-        <div className="columns">
-          <div className="column" />
-          <div className="column is-two-fifths">
-            {/* <label className="label">Search</label> */}
-            <div className="columns">
-              <div className="column">
-                <a class="button is-fullwidth is-dark">User</a>
-              </div>
-              <div className="column">
-                <a class="button is-fullwidth is-outlined">Repository</a>
-              </div>
-            </div>
-            {/* <p className="control"> */}
-            <input
-              className="input"
-              type="text"
-              placeholder="Input search text"
-              onChange={this.handleTextInput}
-              value={this.state.searchText}
-            />
-            {/* </p> */}
-          </div>
-          <div className="column" />
-        </div>
-
+        <SearchBox
+          handleTextInput={this.handleTextInput}
+          searchText={this.state.searchText}
+        />
         {this.state.token !== "" &&
           this.state.searchText !== "" &&
           this.state.client !== null && (
