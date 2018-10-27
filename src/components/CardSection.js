@@ -1,5 +1,6 @@
 import React from "react";
 import Card from "./Card.js";
+import CardRepository from "./CardRepository.js";
 
 export default class CardSection extends React.Component {
   render() {
@@ -9,7 +10,11 @@ export default class CardSection extends React.Component {
       const line = (
         <div key={i} className="columns">
           {Array.from(Array(3), (_, k) => k + i).map(j => {
-            return <Card key={j} user={users[j]} />;
+            if (this.props.name === "User") {
+              return <Card key={j} user={users[j]} />;
+            } else {
+              return <CardRepository key={j} repository={users[j]} />;
+            }
           })}
         </div>
       );

@@ -1,8 +1,9 @@
 import React from "react";
+import Button from "./Button.js";
 
 export default class SearchBox extends React.Component {
   constructor(props) {
-    super();
+    super(props);
     this.handleTextInput = this.handleTextInput.bind(this);
   }
 
@@ -16,12 +17,16 @@ export default class SearchBox extends React.Component {
         <div className="column" />
         <div className="column is-two-fifths">
           <div className="columns">
-            <div className="column">
-              <a class="button is-fullwidth is-dark">User</a>
-            </div>
-            <div className="column">
-              <a class="button is-fullwidth is-outlined">Repository</a>
-            </div>
+            <Button
+              name={"User"}
+              selectedOption={this.props.selectedOption}
+              onButtonClicked={this.props.onButtonClicked}
+            />
+            <Button
+              name={"Repository"}
+              selectedOption={this.props.selectedOption}
+              onButtonClicked={this.props.onButtonClicked}
+            />
           </div>
           <input
             className="input"

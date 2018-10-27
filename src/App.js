@@ -10,52 +10,42 @@ import {
 } from "./helpers/graphqlHelper.js";
 import "./App.css";
 
-// DEBUG
-import { TOKEN } from "./config.js";
-
 class App extends React.Component {
   constructor() {
     super();
 
-    // DEBUG
-    const initialToken = TOKEN;
-
-    this.state = {
-      searchText: "",
-      token: initialToken,
-      client: generateClient(initialToken),
-      query: QUERY_USER_SEARCH,
-      searchCategory: "user",
-      selectedOption: ""
-    };
+    const initialToken = "";
+    const initialChecked = "User";
+    const initialSearchText = ""
 
     this.QUERIES = {
-      user: QUERY_USER_SEARCH,
-      repository: QUERY_REPOSITORY_SEARCH
+      User: QUERY_USER_SEARCH,
+      Repository: QUERY_REPOSITORY_SEARCH
+    };
+
+    this.state = {
+      searchText: initialSearchText,
+      token: initialToken,
+      client: generateClient(initialToken),
+      query: this.QUERIES[initialChecked],
+      selectedOption: initialChecked
     };
 
     this.handleTextInput = this.handleTextInput.bind(this);
     this.handleTokenInput = this.handleTokenInput.bind(this);
-    this.handleUserButtonClicked = this.handleUserButtonClicked.bind(this);
-    this.handleRepositoryButtonClicked = this.handleRepositoryButtonClicked.bind(
-      this
-    );
+    this.handleButtonClicked = this.handleButtonClicked.bind(this);
   }
 
   handleTextInput = event => {
-    this.setState({ searchText: event.target.value.trim() });
+    this.setState({ searchText: event.target.value });
   };
 
   handleTokenInput = token => {
     this.setState({ token, client: generateClient(token) });
   };
 
-  handleUserButtonClicked = event => {
-    this.setState({ searchCategory: "user" });
-  };
-
-  handleRepositoryButtonClicked = event => {
-    this.setState({ searchCategory: "repository" });
+  handleButtonClicked = name => {
+    this.setState({ selectedOption: name, query: this.QUERIES[name] });
   };
 
   // TODO Responsive Design(button margin, left, right)
@@ -67,13 +57,15 @@ class App extends React.Component {
         <SearchBox
           handleTextInput={this.handleTextInput}
           searchText={this.state.searchText}
+          selectedOption={this.state.selectedOption}
+          onButtonClicked={this.handleButtonClicked}
         />
         {this.state.token !== "" &&
           this.state.searchText !== "" &&
           this.state.client !== null && (
             <ApolloProvider client={this.state.client}>
               <Query
-                query={QUERY_USER_SEARCH}
+                query={this.state.query}
                 variables={{ queryString: this.state.searchText }}
               >
                 {({ loading, error, data }) => {
@@ -91,7 +83,12 @@ class App extends React.Component {
 
                   console.log(data); // DEBUG
 
-                  return <CardSection users={data.search.nodes} />;
+                  return (
+                    <CardSection
+                      name={this.state.selectedOption}
+                      users={data.search.nodes}
+                    />
+                  );
                 }}
               </Query>
             </ApolloProvider>

@@ -25,15 +25,24 @@ export const QUERY_USER_SEARCH = gql`
   }
 `;
 
-// TODO select columns
 export const QUERY_REPOSITORY_SEARCH = gql`
   query SearchRepository($queryString: String!) {
-    search(query: $queryString, type: REPOSITORY, first: 30) {
+    search(query: $queryString, type: REPOSITORY, first: 15) {
       repositoryCount,
       nodes {
         ... on Repository {
   	      name,
           url,
+          primaryLanguage {
+            color,
+            name
+          },
+          stargazers {
+            totalCount
+          },
+          watchers {
+            totalCount
+          },
           nameWithOwner,
           owner {
             id

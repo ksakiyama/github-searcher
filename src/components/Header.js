@@ -1,8 +1,8 @@
 import React from "react";
 
 class Header extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.handleInputChange = this.handleInputChange.bind(this);
   }
 
