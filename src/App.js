@@ -75,8 +75,8 @@ class App extends React.Component {
                   if (error) {
                     return (
                       <div className="notification">
-                        <b>ERROR: </b>
-                        Rendering was failed!
+                        <p><b>ERROR</b></p>
+                        <p>{error.message}</p>
                       </div>
                     );
                   }
