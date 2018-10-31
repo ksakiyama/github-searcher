@@ -23,7 +23,7 @@ Run `yarn` and `yarn start`.
 * Generate token
 
 ## TODO
-* [ ] Search repositories
+* [x] Search repositories
 * [ ] Show details about user/repository
 * [ ] Add tests
 * [ ] Redux
