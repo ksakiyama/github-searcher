@@ -40,14 +40,14 @@ class App extends React.Component {
     this.handleButtonClicked = this.handleButtonClicked.bind(this);
   }
 
-  handleTextInput = event => {
-    this.setState({ searchText: event.target.value });
+  handleTextInput = value => {
+    this.setState({ searchText: value });
   };
 
-  handleTokenInput = event => {
+  handleTokenInput = value => {
     this.setState({
-      token: event.target.value,
-      client: generateClient(event.target.value)
+      token: value,
+      client: generateClient(value)
     });
   };
 

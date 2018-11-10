@@ -11,12 +11,12 @@ const SearchBox = props => {
           <Button
             name={"User"}
             selectedOption={props.selectedOption}
-            onButtonClicked={props.buttonClickHandler}
+            clickHandler={props.buttonClickHandler}
           />
           <Button
             name={"Repository"}
             selectedOption={props.selectedOption}
-            onButtonClicked={props.buttonClickHandler}
+            clickHandler={props.buttonClickHandler}
           />
         </div>
         <TextBox

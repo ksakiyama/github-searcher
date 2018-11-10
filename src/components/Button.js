@@ -1,26 +1,27 @@
 import React from "react";
+import { Button as MButton } from "@material-ui/core";
 
-export default class Button extends React.Component {
+class Button extends React.Component {
   constructor(props) {
     super(props);
     this.handleButtonClicked = this.handleButtonClicked.bind(this);
   }
 
   handleButtonClicked = () => {
-    this.props.onButtonClicked(this.props.name);
+    this.props.clickHandler(this.props.name);
   };
 
   render() {
-    const classes =
-      this.props.name === this.props.selectedOption
-        ? "button is-fullwidth is-dark"
-        : "button is-fullwidth is-outlined";
     return (
-      <div className="column">
-        <div className={classes} onClick={this.handleButtonClicked}>
-          {this.props.name}
-        </div>
-      </div>
+      <MButton
+        variant="contained"
+        color="primary"
+        onClick={this.handleButtonClicked}
+      >
+        {this.props.name}
+      </MButton>
     );
   }
 }
+
+export default Button;

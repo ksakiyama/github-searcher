@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^3.4.0",
     "apollo-boost": "^0.1.16",
     "graphql": "^14.0.2",
     "graphql-tag": "^2.9.2",
