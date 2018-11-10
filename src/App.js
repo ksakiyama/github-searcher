@@ -7,16 +7,20 @@ import {
   QUERY_USER_SEARCH,
   QUERY_REPOSITORY_SEARCH,
   generateClient
-} from "./helpers/graphqlHelper.js";
+} from "./graphql/graphqlHelper.js";
 import "./App.css";
+
+// DEBUG
+import { TOKEN } from "./config.js";
 
 class App extends React.Component {
   constructor() {
     super();
 
-    const initialToken = "";
+    // TODO
+    const initialToken = TOKEN;
     const initialChecked = "User";
-    const initialSearchText = ""
+    const initialSearchText = "";
 
     this.QUERIES = {
       User: QUERY_USER_SEARCH,
@@ -40,8 +44,11 @@ class App extends React.Component {
     this.setState({ searchText: event.target.value });
   };
 
-  handleTokenInput = token => {
-    this.setState({ token, client: generateClient(token) });
+  handleTokenInput = event => {
+    this.setState({
+      token: event.target.value,
+      client: generateClient(event.target.value)
+    });
   };
 
   handleButtonClicked = name => {
@@ -52,13 +59,16 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Header inputHandler={this.handleTokenInput} token={this.state.token} />
+        <Header
+          textInputHandler={this.handleTokenInput}
+          text={this.state.token}
+        />
         <br />
         <SearchBox
-          handleTextInput={this.handleTextInput}
+          textInputHandler={this.handleTextInput}
           searchText={this.state.searchText}
           selectedOption={this.state.selectedOption}
-          onButtonClicked={this.handleButtonClicked}
+          buttonClickHandler={this.handleButtonClicked}
         />
         {this.state.token !== "" &&
           this.state.searchText !== "" &&
@@ -75,13 +85,15 @@ class App extends React.Component {
                   if (error) {
                     return (
                       <div className="notification">
-                        <p><b>ERROR</b></p>
+                        <p>
+                          <b>ERROR</b>
+                        </p>
                         <p>{error.message}</p>
                       </div>
                     );
                   }
 
-                  console.log(data); // DEBUG
+                  //console.log(data); // DEBUG
 
                   return (
                     <CardSection

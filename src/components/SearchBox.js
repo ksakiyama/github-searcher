@@ -1,43 +1,33 @@
 import React from "react";
 import Button from "./Button.js";
+import TextBox from "./TextBox.js";
 
-export default class SearchBox extends React.Component {
-  constructor(props) {
-    super(props);
-    this.handleTextInput = this.handleTextInput.bind(this);
-  }
-
-  handleTextInput = event => {
-    this.props.handleTextInput(event);
-  };
-
-  render() {
-    return (
-      <div className="columns">
-        <div className="column" />
-        <div className="column is-two-fifths">
-          <div className="columns">
-            <Button
-              name={"User"}
-              selectedOption={this.props.selectedOption}
-              onButtonClicked={this.props.onButtonClicked}
-            />
-            <Button
-              name={"Repository"}
-              selectedOption={this.props.selectedOption}
-              onButtonClicked={this.props.onButtonClicked}
-            />
-          </div>
-          <input
-            className="input"
-            type="text"
-            placeholder="Input search text"
-            onChange={this.handleTextInput}
-            value={this.props.searchText}
+const SearchBox = props => {
+  return (
+    <div className="columns">
+      <div className="column" />
+      <div className="column is-two-fifths">
+        <div className="columns">
+          <Button
+            name={"User"}
+            selectedOption={props.selectedOption}
+            onButtonClicked={props.buttonClickHandler}
+          />
+          <Button
+            name={"Repository"}
+            selectedOption={props.selectedOption}
+            onButtonClicked={props.buttonClickHandler}
           />
         </div>
-        <div className="column" />
+        <TextBox
+          placeholder="Input search text"
+          value={props.searchText}
+          textInputHandler={props.textInputHandler}
+        />
       </div>
-    );
-  }
-}
+      <div className="column" />
+    </div>
+  );
+};
+
+export default SearchBox;
