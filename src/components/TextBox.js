@@ -1,5 +1,12 @@
 import React from "react";
-import {TextField as MTextField} from "@material-ui/core"
+import { withStyles } from "@material-ui/core/styles";
+import { TextField as MTextField } from "@material-ui/core";
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1
+  }
+});
 
 class TextBox extends React.Component {
   constructor(props) {
@@ -12,15 +19,20 @@ class TextBox extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
+
     return (
       <MTextField
+        className={classes.root}
+        label={this.props.placeholder}
         type={this.props.type ? this.props.type : "text"}
         placeholder={this.props.placeholder}
         onChange={this.handleTextInput}
         value={this.props.value}
+        fullWidth
       />
     );
   }
 }
 
-export default TextBox;
+export default withStyles(styles)(TextBox);

@@ -1,28 +1,49 @@
 import React from "react";
-import TextBox from "./TextBox.js";
 
-const Header = (props) => {
-  return (
-    <section className="hero is-dark">
-      <div className="hero-body">
-        <div className="columns">
-          <div className="column is-three-fifths">
-            <h1 className="title">GitHub App</h1>
-            <h2 className="subtitle">By React, GraphQL</h2>
-          </div>
-          <div className="column">
-            <label className="label has-text-white">Your API token</label>
-            <TextBox
-              type="password"
-              placeholder="Token"
-              value={props.text}
-              textInputHandler={props.textInputHandler}
-            />
-          </div>
-        </div>
-      </div>
-    </section>
-  );
+import { withStyles } from "@material-ui/core/styles";
+import Paper from "@material-ui/core/Paper";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+
+const styles = {
+  root: {
+    flexGrow: 1
+  },
+  title: {
+    textAlign: "center"
+  }
 };
 
-export default Header;
+class Header extends React.Component {
+  state = {
+    value: 0
+  };
+
+  handleChange = (event, value) => {
+    this.setState({ value });
+  };
+
+  render() {
+    const { classes } = this.props;
+
+    return (
+      <div>
+        <h1 className={classes.title}>Github App</h1>
+        <Paper className={classes.root}>
+          <Tabs
+            value={this.state.value}
+            onChange={this.handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            centered
+          >
+            <Tab label="User" />
+            <Tab label="Repository" />
+          </Tabs>
+        </Paper>
+      </div>
+    );
+  }
+}
+
+export default withStyles(styles)(Header);

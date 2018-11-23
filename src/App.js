@@ -1,7 +1,7 @@
 import React from "react";
 import { ApolloProvider, Query } from "react-apollo";
 import Header from "./components/Header.js";
-import SearchBox from "./components/SearchBox.js";
+import TextBox from "./components/TextBox.js";
 import CardSection from "./components/CardSection.js";
 import {
   QUERY_USER_SEARCH,
@@ -12,6 +12,22 @@ import "./App.css";
 
 // DEBUG
 import { TOKEN } from "./config.js";
+
+import { withStyles } from "@material-ui/core/styles";
+import Grid from "@material-ui/core/Grid";
+
+const styles = theme => ({
+  root: {
+    flexGrow: 1
+  },
+  paper: {
+    height: 140,
+    width: 100
+  },
+  control: {
+    padding: theme.spacing.unit * 2
+  }
+});
 
 class App extends React.Component {
   constructor() {
@@ -59,55 +75,73 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <Header
-          textInputHandler={this.handleTokenInput}
-          text={this.state.token}
-        />
-        <br />
-        <SearchBox
-          textInputHandler={this.handleTextInput}
-          searchText={this.state.searchText}
-          selectedOption={this.state.selectedOption}
-          buttonClickHandler={this.handleButtonClicked}
-        />
-        {this.state.token !== "" &&
-          this.state.searchText !== "" &&
-          this.state.client !== null && (
-            <ApolloProvider client={this.state.client}>
-              <Query
-                query={this.state.query}
-                variables={{ queryString: this.state.searchText }}
-              >
-                {({ loading, error, data }) => {
-                  if (loading) {
-                    return <div className="notification">Loading...</div>;
-                  }
-                  if (error) {
+        <Grid container className={styles.root} spacing={16}>
+          <Grid container item spacing={8} justify="center">
+            <Grid item xs={6}>
+              <Header />
+            </Grid>
+          </Grid>
+          <Grid container item spacing={8} justify="center">
+            <Grid item xs={3}>
+              <TextBox
+                placeholder={"Your API Token"}
+                type={"password"}
+                textInputHandler={this.handleTokenInput}
+                value={this.state.token}
+              />
+            </Grid>
+          </Grid>
+          <Grid container item spacing={8} justify="center">
+            <Grid item xs={6}>
+              {/* TODO controll by tab */}
+              <TextBox
+                placeholder="Input search text on GitHub"
+                value={this.state.searchText}
+                textInputHandler={this.handleTextInput}
+              />
+            </Grid>
+          </Grid>
+          <Grid container item spacing={8} justify="center">
+          {this.state.token !== "" &&
+            this.state.searchText !== "" &&
+            this.state.client !== null && (
+              <ApolloProvider client={this.state.client}>
+                <Query
+                  query={this.state.query}
+                  variables={{ queryString: this.state.searchText }}
+                >
+                  {({ loading, error, data }) => {
+                    if (loading) {
+                      return <div className="">Loading...</div>;
+                    }
+                    if (error) {
+                      return (
+                        <div className="">
+                          <p>
+                            <b>ERROR</b>
+                          </p>
+                          <p>{error.message}</p>
+                        </div>
+                      );
+                    }
+
+                    //console.log(data); // DEBUG
+
                     return (
-                      <div className="notification">
-                        <p>
-                          <b>ERROR</b>
-                        </p>
-                        <p>{error.message}</p>
-                      </div>
+                      <CardSection
+                        name={this.state.selectedOption}
+                        users={data.search.nodes}
+                      />
                     );
-                  }
-
-                  //console.log(data); // DEBUG
-
-                  return (
-                    <CardSection
-                      name={this.state.selectedOption}
-                      users={data.search.nodes}
-                    />
-                  );
-                }}
-              </Query>
-            </ApolloProvider>
-          )}
+                  }}
+                </Query>
+              </ApolloProvider>
+            )}
+            </Grid>
+        </Grid>
       </div>
     );
   }
 }
 
-export default App;
+export default withStyles(styles)(App);
