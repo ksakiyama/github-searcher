@@ -1,8 +1,7 @@
 import React from "react";
-import { ApolloProvider, Query } from "react-apollo";
+import ApolloArea from "./components/ApolloArea.js";
 import Header from "./components/Header.js";
 import TextBox from "./components/TextBox.js";
-import CardSection from "./components/CardSection.js";
 import {
   QUERY_USER_SEARCH,
   QUERY_REPOSITORY_SEARCH,
@@ -20,12 +19,8 @@ const styles = theme => ({
   root: {
     flexGrow: 1
   },
-  paper: {
-    height: 140,
-    width: 100
-  },
-  control: {
-    padding: theme.spacing.unit * 2
+  margin: {
+    marginTop: "15px"
   }
 });
 
@@ -73,72 +68,36 @@ class App extends React.Component {
 
   // TODO Responsive Design(button margin, left, right)
   render() {
+    const { classes } = this.props;
+
     return (
-      <div className="App">
-        <Grid container className={styles.root} spacing={16}>
-          <Grid container item spacing={8} justify="center">
-            <Grid item xs={6}>
-              <Header />
-            </Grid>
+      <div className={classes.root}>
+        <Grid container item spacing={8} justify="center">
+          <Grid item xs={6}>
+            <Header />
           </Grid>
-          <Grid container item spacing={8} justify="center">
-            <Grid item xs={3}>
-              <TextBox
-                placeholder={"Your API Token"}
-                type={"password"}
-                textInputHandler={this.handleTokenInput}
-                value={this.state.token}
-              />
-            </Grid>
-          </Grid>
-          <Grid container item spacing={8} justify="center">
-            <Grid item xs={6}>
-              {/* TODO controll by tab */}
-              <TextBox
-                placeholder="Input search text on GitHub"
-                value={this.state.searchText}
-                textInputHandler={this.handleTextInput}
-              />
-            </Grid>
-          </Grid>
-          <Grid container item spacing={8} justify="center">
-          {this.state.token !== "" &&
-            this.state.searchText !== "" &&
-            this.state.client !== null && (
-              <ApolloProvider client={this.state.client}>
-                <Query
-                  query={this.state.query}
-                  variables={{ queryString: this.state.searchText }}
-                >
-                  {({ loading, error, data }) => {
-                    if (loading) {
-                      return <div className="">Loading...</div>;
-                    }
-                    if (error) {
-                      return (
-                        <div className="">
-                          <p>
-                            <b>ERROR</b>
-                          </p>
-                          <p>{error.message}</p>
-                        </div>
-                      );
-                    }
-
-                    //console.log(data); // DEBUG
-
-                    return (
-                      <CardSection
-                        name={this.state.selectedOption}
-                        users={data.search.nodes}
-                      />
-                    );
-                  }}
-                </Query>
-              </ApolloProvider>
-            )}
-            </Grid>
         </Grid>
+        <Grid container item spacing={8} justify="center" className={classes.margin}>
+          <Grid item xs={3}>
+            <TextBox
+              placeholder={"Your API Token"}
+              type={"password"}
+              textInputHandler={this.handleTokenInput}
+              value={this.state.token}
+            />
+          </Grid>
+        </Grid>
+        <Grid container item spacing={8} justify="center" className={classes.margin}>
+          <Grid item xs={6}>
+            {/* TODO controll by tab */}
+            <TextBox
+              placeholder="Input search text on GitHub"
+              value={this.state.searchText}
+              textInputHandler={this.handleTextInput}
+            />
+          </Grid>
+        </Grid>
+        <ApolloArea object={this.state} />
       </div>
     );
   }
