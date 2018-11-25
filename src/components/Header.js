@@ -19,8 +19,11 @@ class Header extends React.Component {
     value: 0
   };
 
+  labels = ["User", "Repository"];
+
   handleChange = (event, value) => {
     this.setState({ value });
+    this.props.tabClickHandler(this.labels[value]);
   };
 
   render() {
@@ -37,8 +40,8 @@ class Header extends React.Component {
             textColor="primary"
             centered
           >
-            <Tab label="User" />
-            <Tab label="Repository" />
+            <Tab label={this.labels[0]} />
+            <Tab label={this.labels[1]} />
           </Tabs>
         </Paper>
       </div>

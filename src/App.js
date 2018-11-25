@@ -7,7 +7,6 @@ import {
   QUERY_REPOSITORY_SEARCH,
   generateClient
 } from "./graphql/graphqlHelper.js";
-import "./App.css";
 
 // DEBUG
 import { TOKEN } from "./config.js";
@@ -48,7 +47,7 @@ class App extends React.Component {
 
     this.handleTextInput = this.handleTextInput.bind(this);
     this.handleTokenInput = this.handleTokenInput.bind(this);
-    this.handleButtonClicked = this.handleButtonClicked.bind(this);
+    this.handleOptionClick = this.handleOptionClick.bind(this);
   }
 
   handleTextInput = value => {
@@ -62,7 +61,7 @@ class App extends React.Component {
     });
   };
 
-  handleButtonClicked = name => {
+  handleOptionClick = name => {
     this.setState({ selectedOption: name, query: this.QUERIES[name] });
   };
 
@@ -71,12 +70,12 @@ class App extends React.Component {
 
     return (
       <div className={classes.root}>
-        <Grid container item spacing={8} justify="center">
+        <Grid container item spacing={16} justify="center">
           <Grid item xs={6}>
-            <Header />
+            <Header tabClickHandler={this.handleOptionClick} />
           </Grid>
         </Grid>
-        <Grid container item spacing={8} justify="center" className={classes.margin}>
+        <Grid container item spacing={16} justify="center" className={classes.margin}>
           <Grid item xs={3}>
             <TextBox
               placeholder={"Your API Token"}
@@ -86,7 +85,7 @@ class App extends React.Component {
             />
           </Grid>
         </Grid>
-        <Grid container item spacing={8} justify="center" className={classes.margin}>
+        <Grid container item spacing={16} justify="center" className={classes.margin}>
           <Grid item xs={6}>
             {/* TODO controll by tab */}
             <TextBox

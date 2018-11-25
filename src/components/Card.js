@@ -18,10 +18,6 @@ const styles = theme => ({
 });
 
 class Card extends React.Component {
-  constructor(props) {
-    super();
-  }
-
   render() {
     const { classes } = this.props;
     const user = this.props.user;
@@ -31,7 +27,7 @@ class Card extends React.Component {
     }
 
     return (
-        <Paper className={classes.root} elevation={1}>
+        <Paper className={classes.root} elevation={2}>
           <Avatar className={classes.avatar} alt={user.login} src={user.avatarUrl} />
           <Typography variant="h5" component="h3">
             {user.login}

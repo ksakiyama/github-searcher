@@ -44,13 +44,15 @@ class ApolloArea extends React.Component {
                   );
                 }
 
-                console.log(data); // DEBUG
-
                 return (
-                  <CardSection
-                    name={selectedOption}
-                    users={data.search.nodes}
-                  />
+                  <div>
+                    {data && (
+                      <CardSection
+                        name={selectedOption}
+                        objects={data.search.nodes}
+                      />
+                    )}
+                  </div>
                 );
               }}
             </Query>

@@ -5,12 +5,12 @@ import Grid from "@material-ui/core/Grid";
 
 class CardSection extends React.Component {
   render() {
-    const users = this.props.users;
+    const { name, objects } = this.props;
     return (
       <Grid container item spacing={16}>
-        {users.map(user => (
-          <Grid key={user.login} item xs={4}>
-            <Card user={user} />
+        {objects.map(obj => (
+          <Grid key={obj.login} item xs={4}>
+            <Card user={obj} />
           </Grid>
         ))}
       </Grid>
