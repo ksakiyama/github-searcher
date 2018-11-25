@@ -20,7 +20,7 @@ const styles = theme => ({
     flexGrow: 1
   },
   margin: {
-    marginTop: "15px"
+    marginTop: 10
   }
 });
 
@@ -66,7 +66,6 @@ class App extends React.Component {
     this.setState({ selectedOption: name, query: this.QUERIES[name] });
   };
 
-  // TODO Responsive Design(button margin, left, right)
   render() {
     const { classes } = this.props;
 

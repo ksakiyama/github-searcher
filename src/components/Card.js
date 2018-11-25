@@ -1,37 +1,45 @@
 import React from "react";
+import { withStyles } from "@material-ui/core/styles";
+import Avatar from "@material-ui/core/Avatar";
+import Paper from "@material-ui/core/Paper";
+import Typography from "@material-ui/core/Typography";
 
-export default class Card extends React.Component {
+const styles = theme => ({
+  root: {
+    paddingTop: 10,
+    paddingLeft: 20,
+    marginTop: 10,
+    height: 120
+  },
+  avatar: {
+    width: 50,
+    height: 50
+  }
+});
+
+class Card extends React.Component {
+  constructor(props) {
+    super();
+  }
+
   render() {
+    const { classes } = this.props;
     const user = this.props.user;
+
     if (!user) {
-      return <div className="column" />;
+      return <h1>No result</h1>;
     }
+
     return (
-      <div className="column">
-        {/* TODO go to detail view */}
-        <a href="#top">
-          <div className="card">
-            <div className="card-content">
-              <div className="media">
-                <div className="media-left">
-                  <figure className="image is-48x48">
-                    <img
-                      className="is-rounded"
-                      src={user.avatarUrl}
-                      alt={user.login}
-                    />
-                  </figure>
-                </div>
-                <div className="media-content">
-                  <p className="title is-5">{user.login}</p>
-                  <p className="subtitle is-6">{user.name}</p>
-                </div>
-              </div>
-              {/* TODO {user.bio !== "" && <div className="content">{user.bio}</div>} */}
-            </div>
-          </div>
-        </a>
-      </div>
+        <Paper className={classes.root} elevation={1}>
+          <Avatar className={classes.avatar} alt={user.login} src={user.avatarUrl} />
+          <Typography variant="h5" component="h3">
+            {user.login}
+          </Typography>
+          <Typography component="p">{user.name}</Typography>
+        </Paper>
     );
   }
 }
+
+export default withStyles(styles)(Card);

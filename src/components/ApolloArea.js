@@ -1,6 +1,7 @@
 import React from "react";
 import { ApolloProvider, Query } from "react-apollo";
 import Grid from "@material-ui/core/Grid";
+import CardSection from "./CardSection.js";
 
 class ApolloArea extends React.Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class ApolloArea extends React.Component {
   }
 
   render() {
-    const { client, query, searchText } = this.props.object;
+    const { client, query, searchText, selectedOption } = this.props.object;
     return (
       <div id="ApolloArea">
         {this.isRenderable() && (
@@ -46,11 +47,10 @@ class ApolloArea extends React.Component {
                 console.log(data); // DEBUG
 
                 return (
-                  // <CardSection
-                  //   name={this.state.selectedOption}
-                  //   users={data.search.nodes}
-                  // />
-                  <h1>Apollo desu</h1>
+                  <CardSection
+                    name={selectedOption}
+                    users={data.search.nodes}
+                  />
                 );
               }}
             </Query>
