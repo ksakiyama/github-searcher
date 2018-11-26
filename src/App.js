@@ -1,3 +1,4 @@
+// @flow
 import React from "react";
 import ApolloArea from "./components/ApolloArea.js";
 import Header from "./components/Header.js";
